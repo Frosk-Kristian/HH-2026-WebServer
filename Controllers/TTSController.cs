@@ -15,7 +15,6 @@ namespace HH_2026_WebServer.Controllers
         /// Gets an image from request body, encodes it in base64 and sends it to OpenRouter for processing, then returns the TTS result
         /// </summary>
         /// <returns></returns>
-
         [HttpPost]
         [Route("api/tts")]
         public async Task<IActionResult> TTSFromImage()
