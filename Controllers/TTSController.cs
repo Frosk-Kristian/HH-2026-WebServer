@@ -5,6 +5,12 @@ using Microsoft.Extensions.Logging;
 
 namespace HH_2026_WebServer.Controllers
 {
+    /// <summary>
+    /// Controller for handling Text-to-Speech requests. Sole controller that an external client will interact with.
+    /// </summary>
+    /// <remarks>
+    /// To-Do: Implement text to speech functionality, currently transcribes text and returns it
+    /// </remarks>
     [ApiController]
     public class TTSController : ControllerBase
     {
