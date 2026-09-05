@@ -27,8 +27,8 @@ namespace HH_2026_WebServer.Services
         /// <summary>
         /// Transcribes text from an image by sending it to OpenRouter's API.
         /// </summary>
-        /// <param name="imgBytes"></param>
-        /// <returns></returns>
+        /// <param name="imgBytes">Bytes of the image to transcribe</param>
+        /// <returns>Transcribed text as string</returns>
         public async Task<string> TranscribeImage(byte[] imgBytes)
         {
             // encodes image bytes to base64
