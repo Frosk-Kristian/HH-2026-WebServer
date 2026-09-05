@@ -22,7 +22,7 @@ namespace HH_2026_WebServer.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/tts")]
+        [Route("api/tts/transcribe")]
         public async Task<IActionResult> TTSFromImage()
         {
             var memoryStream = new MemoryStream();
