@@ -108,13 +108,13 @@ namespace HH_2026_WebServer.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/tts/fromtext")]
-        public async Task<IActionResult> TTSFromText(string text)
+        public async Task<IActionResult> TTSFromText(string msg)
         {
-            byte[] audioBytes;
-
+            _logger.Log(LogLevel.Information, "Generating speech from text: {text}", msg);
             try
             {
-                audioBytes = await _ttsService.Generate(text);
+                byte[] audioBytes = await _ttsService.Generate(msg);
+                return File(audioBytes, "audio/wav", "output.wav");
 
             }
             catch (Exception e)
@@ -122,9 +122,6 @@ namespace HH_2026_WebServer.Controllers
                 _logger.LogError("Exception occurred while generating speech.\n{message}", e.Message);
                 return StatusCode(500, "Error occurred while generating speech.");
             }
-
-            return File(audioBytes, "audio/wav", "output.wav");
-
         }
     }
 }
