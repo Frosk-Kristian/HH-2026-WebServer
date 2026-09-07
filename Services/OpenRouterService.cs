@@ -11,17 +11,20 @@ namespace HH_2026_WebServer.Services
     {
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
+        private readonly ILogger<OpenRouterService> _logger;
 
         /// <summary>
         /// Constructor for OpenRouterService, initializes HttpClient and retrieves API key from configuration.
         /// </summary>
         /// <param name="httpClient"></param>
         /// <param name="configuration"></param>
+        /// <param name="logger"></param>
         /// <exception cref="InvalidOperationException">If API Key has not been configured in appsettings.json</exception>
-        public OpenRouterService(HttpClient httpClient, IConfiguration configuration)
+        public OpenRouterService(HttpClient httpClient, IConfiguration configuration, ILogger<OpenRouterService> logger)
         {
             _httpClient = httpClient;
             _apiKey = configuration["OpenRouter:ApiKey"] ?? throw new InvalidOperationException("API Key is not configured!");
+            _logger = logger;
         }
 
         /// <summary>
@@ -74,6 +77,7 @@ namespace HH_2026_WebServer.Services
 
             // awaits response from OpenRouter, throwing an exception if the response indicates failure
             using HttpResponseMessage response = await _httpClient.SendAsync(request);
+            _logger.LogInformation("OpenRouter API response status: {statusCode} - {message}", response.StatusCode, response.ReasonPhrase);
             response.EnsureSuccessStatusCode();
 
             // reads and parses response content
