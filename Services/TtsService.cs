@@ -1,5 +1,6 @@
 ﻿using KokoroSharp;
 using KokoroSharp.Core;
+using NAudio.Wave;
 
 namespace HH_2026_WebServer.Services
 {
@@ -26,10 +27,10 @@ namespace HH_2026_WebServer.Services
         public void Dispose() => _synthesizer.Dispose();
 
         /// <summary>
-        /// Generates audio bytes from a given string
+        /// Generates audio bytes from a given string, converts to .wav format and returns without ever saving the file to disk.
         /// </summary>
         /// <param name="text">String text to convert to speech</param>
-        /// <returns>Audio bytes representing the synthesized speech</returns>
+        /// <returns>Byte array .wav file</returns>
         /// <exception cref="ArgumentNullException">If text is null or empty</exception>
         public async Task<byte[]> Generate(string text)
         {
@@ -37,9 +38,17 @@ namespace HH_2026_WebServer.Services
                 throw new ArgumentNullException(nameof(text));
             }
 
+            // Raw audio samples, NOT a completed .wav file yet
             byte[] audioBytes = await _synthesizer.SynthesizeAsync(text, _voice);
 
-            return audioBytes;
+            // Converts raw audio samples to a .wav file format and returns the resulting byte array
+            using var memoryStream = new MemoryStream();
+            using (var writer = new WaveFileWriter(memoryStream, KokoroPlayback.waveFormat))
+            {
+                writer.Write(audioBytes, 0, audioBytes.Length);
+            }
+
+            return memoryStream.ToArray();
         }
     }
 }
