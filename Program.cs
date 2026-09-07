@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddHttpClient<OpenRouterService>(); // Register OpenRouterService with HttpClient
+builder.Services.AddSingleton<TtsService>(); // Register TtsService as a singleton>
 
 var app = builder.Build();
 
