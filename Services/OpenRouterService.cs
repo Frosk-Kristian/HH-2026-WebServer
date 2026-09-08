@@ -42,16 +42,13 @@ namespace HH_2026_WebServer.Services
             // constructs the request body to be sent to OpenRouter's API
             var requestBody = new {
                 model = "google/gemma-4-31b-it",
-                temperature = 0.0,
                 messages = new[] {
                     new {
                         role = "user",
                         content = new object[] {
                             new {
                                 type = "text",
-                                text = "Transcribe the text in this image. " + 
-                                       "CRITCAL: if absolutely no text is found, you must output 'ERROR_NO_TEXT' and absolutely nothing else. " +
-                                       "Do not include greetings, explanations, or markdown formatting."
+                                text = "Transcribe the text in this image. If no text is found please reply with ERROR_NO_TEXT."
                             },
                             new {
                                 type = "image_url",
