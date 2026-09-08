@@ -48,17 +48,17 @@ namespace HH_2026_WebServer.Controllers
             try
             {
                 imgText = await _openRouterService.TranscribeImage(imageBytes);
+
+                // return 422: unprocessable content when model on OpenRouter returns ERROR_NO_TEXT
+                if (imgText.Contains("ERROR_NO_TEXT"))
+                {
+                    return StatusCode(422, "No text found.");
+                }
             }
             catch (HttpRequestException e)
             {
                 _logger.LogError("OpenRouter API returned an error.\n{message}", e.Message);
                 return StatusCode(500, "Error occurred while processing the request.");
-            }
-
-            // return 422: unprocessable content when model on OpenRouter returns ERROR_NO_TEXT
-            if (imgText.ToUpper().Contains("ERROR_NO_TEXT"))
-            {
-                return StatusCode(422, "No text found.");
             }
 
             byte[] audioBytes;
