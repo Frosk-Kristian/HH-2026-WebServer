@@ -58,12 +58,6 @@ namespace HH_2026_WebServer.Services
                             }
                         }
                     }
-                },
-                provider = new {
-                    only = new[]
-                    {
-                        "cerebras"
-                    }
                 }
             };
 
