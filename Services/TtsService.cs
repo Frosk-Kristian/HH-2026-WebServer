@@ -18,12 +18,18 @@ namespace HH_2026_WebServer.Services
         /// </summary>
         private readonly KokoroVoice _voice;
 
+        /// <summary>
+        /// Constructor for TtsService, loads WAV synthesizer model and text to speech voice pack.
+        /// </summary>
         public TtsService()
         {
             _synthesizer = KokoroWavSynthesizer.LoadModel();
             _voice = KokoroVoiceManager.GetVoice("bm_lewis");
         }
 
+        /// <summary>
+        /// Calls Dispose() on the WAV synthesizer model when service is disposed.
+        /// </summary>
         public void Dispose() => _synthesizer.Dispose();
 
         /// <summary>
