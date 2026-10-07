@@ -8,9 +8,6 @@ namespace HH_2026_WebServer.Controllers
     /// <summary>
     /// Controller for handling Text-to-Speech requests. Sole controller that an external client will interact with.
     /// </summary>
-    /// <remarks>
-    /// To-Do: Implement text to speech functionality, currently transcribes text and returns it
-    /// </remarks>
     [ApiController]
     public class TTSController : ControllerBase
     {
@@ -34,7 +31,7 @@ namespace HH_2026_WebServer.Controllers
         /// <summary>
         /// Gets an image from request body, encodes it in base64 and sends it to OpenRouter for processing, then returns the TTS result.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>If successful, replies with status code indicating success and .wav audio file in body. Else, replies with 422 if no text was found in the image or 500 in the event of any other error.</returns>
         [HttpPost]
         [Route("api/tts/fromimage")]
         public async Task<IActionResult> TTSFromImage()
@@ -80,7 +77,7 @@ namespace HH_2026_WebServer.Controllers
         /// <summary>
         /// Gets an image from request body, encodes it in base64 and sends it to OpenRouter for processing, then returns the transcribed text (for testing).
         /// </summary>
-        /// <returns></returns>
+        /// <returns>If successful, replies indicating success with string transcribed text in body. Otherwise, replies with status 500.</returns>
         [HttpPost]
         [Route("api/tts/transcribe")]
         public async Task<IActionResult> Transcribe()
@@ -111,7 +108,7 @@ namespace HH_2026_WebServer.Controllers
         /// Gets a string from the request body, sends it to the TTS service for processing, then returns the generated audio bytes (for testing).
         /// </summary>
         /// <param name="text">String text to convert to speech</param>
-        /// <returns></returns>
+        /// <returns>If successful, replies with status indicating success and .wav audio file in body. Else, replies with 500.</returns>
         [HttpPost]
         [Route("api/tts/fromtext")]
         public async Task<IActionResult> TTSFromText(string msg)
